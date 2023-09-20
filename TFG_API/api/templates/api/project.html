@@ -1,0 +1,100 @@
+{% extends 'api/navbar.html' %} {% block content %}
+
+<div class="container mt-3">
+    <div class="col-md-12 search d-flex justify-content-between">
+        <span class="input-group-list">
+            <i class="icon icon-search">
+                <a class="btn btn-outline-success" href={% url 'home' %} role="button">Volver</a>
+            </i>
+        </span>
+        <i class="icon icon-search">
+            <a class="btn btn-outline-success" href={% url 'updatepublication' project %} role="button">Actualizar</a>
+        </i>
+    </div>
+</div>
+
+<div class="container mt-5">
+    {% for project in project_data %}
+    <div class="card text-white bg-dark">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">{{ project.title }}</h3>
+        <table class="table text-white card-text">
+          <dl class="row">
+            <dt class="col-sm-2">Referencia:</dt>
+            <dd class="col-sm-10"><p>{{ project.reference }}</p></dd>
+            <dt class="col-sm-2">Año:</dt>
+            <dd class="col-sm-4"><p>{{ project.year }}</p></dd>
+            <dt class="col-sm-2">Convocatoria:</dt>
+            <dd class="col-sm-4">{{ project.convocatory }}</dd>
+            <dt class="col-sm-2">Área:</dt>
+            <dd class="col-sm-4"><p>{{ project.area }}</p></dd>
+            <dt class="col-sm-2">Subarea:</dt>
+            <dd class="col-sm-4">{{ project.subarea }}</dd>
+            <dt class="col-sm-2">CCAA:</dt>
+            <dd class="col-sm-4"><p>{{ project.ccaa }}</p></dd>
+            <dt class="col-sm-2">Ciudad:</dt>
+            <dd class="col-sm-4">{{ project.city }}</dd>
+            <dt class="col-sm-2">C.I.F.:</dt>
+            <dd class="col-sm-4"><p>{{ project.cif }}</p></dd>
+            <dt class="col-sm-2">€ Conced.:</dt>
+            <dd class="col-sm-4">{{ project.money }}</dd>
+          </dl>
+        </table>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container mt-4">
+  <h3 class="mb-4">Publicaciones</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Año</th>
+          <th scope="col">Referencia</th>
+          <th scope="col">Título</th>
+          <th scope="col">Citas</th>
+        </tr>
+      </thead>
+      {% for publication in page_obj %}
+      <tbody>
+        <tr>
+          <th scope="row">{{ publication.year }}</th>
+          <td><a href={% url 'publication' publication.idScopus %}>{{ publication.idScopus }}</a></td>
+          <td>{{ publication.title }}</td>
+          <td>{{ publication.cited }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+    {% if is_paginated %}
+      <hr>
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a href="?page=1" class="page-link">Inicio</a>
+          </li>
+
+          {% if page_obj.has_previous %}
+          <li class="page-item {% if page_obj.number == 1 %}disabled{% endif %}">
+            <a href="{% if page_obj.number != 1 %}?page={{ page_obj.previous_page_number }}{% endif %}" class="page-link">Anterior</a>
+          </li>
+          {% endif %}
+
+          <li class="page-item">
+            <p class="page-link text-danger">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</p>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item {% if page_obj.number == page_obj.paginator.num_pages %}disabled{% endif %}">
+            <a href="{% if page_obj.number != page_obj.paginator.num_pages %}?page={{ page_obj.next_page_number }}{% endif %}" class="page-link">Siguiente</a>
+          </li>
+          {% endif %}
+          <li class="page-item">
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Última</a>
+          </li>
+        </ul>
+      </hr>
+    {% endif %}
+</div>
+
+{% endblock %}

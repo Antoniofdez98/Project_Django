@@ -1,0 +1,78 @@
+{% extends 'api/navbar.html' %} {% block content %}
+
+<div class="container mt-3">
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12 search">
+        <form method="get">
+          <div id="custom-search-input">
+            <div class="input-group col-md-12">
+            {% if request.GET.buscar %}
+              <input type="text" class="form-control col-md-10" placeholder="Buscar..." name="buscar" value="{{ request.GET.buscar }}"/>
+            {% else %}
+              <input type="text" class="form-control col-md-10" placeholder="Buscar..." name="buscar"/>
+            {% endif %}
+              <span class="input-group-list col-md-2">
+                <i class="icon icon-search">
+                  <button type="submit" class="btn btn-success">Buscar</button>
+                </i>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Año</th>
+          <th scope="col">Referencia</th>
+          <th scope="col">Título</th>
+          <th scope="col">€ Conced.</th>
+        </tr>
+      </thead>
+      {% for project in project_list %}
+      <tbody>
+        <tr>
+          <th scope="row">{{ project.year }}</th>
+          <td><a href={% url 'project' project.reference %}>{{ project.reference }}</a></td>
+          <td>{{ project.title }}</td>
+          <td>{{ project.money }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+    {% if project_list.has_other_pages %}
+      <hr>
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a href="?page=1" class="page-link">Inicio</a>
+          </li>
+
+          {% if project_list.has_previous %}
+          <li class="page-item {% if project_list.number == 1 %}disabled{% endif %}">
+            <a href="{% if project_list.number != 1 %}?page={{ project_list.previous_page_number }}{% endif %}{% if request.GET.buscar %}&buscar={{ request.GET.buscar }}{% endif %}" class="page-link">Anterior</a>
+          </li>
+          {% endif %}
+
+          <li class="page-item">
+            <p class="page-link text-danger">Página {{ project_list.number }} de {{ project_list.paginator.num_pages }}</p>
+          </li>
+
+          {% if project_list.has_next %}
+          <li class="page-item {% if project_list.number == project_list.paginator.num_pages %}disabled{% endif %}">
+            <a href="{% if project_list.number != project_list.paginator.num_pages %}?page={{ project_list.next_page_number }}{% endif %}{% if request.GET.buscar %}&buscar={{ request.GET.buscar }}{% endif %}" class="page-link">Siguiente</a>
+          </li>
+          {% endif %}
+          <li class="page-item">
+            <a href="?page={{ project_list.paginator.num_pages }}" class="page-link">Última</a>
+          </li>
+        </ul>
+      </hr>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

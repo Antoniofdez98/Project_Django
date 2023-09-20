@@ -1,0 +1,67 @@
+{% extends 'api/navbar.html' %}
+
+{% block content %}
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+            <div class="card-header d-flex justify-content-between">
+                <strong>Crear Proyecto</strong>
+            </div>
+            <div class="card-body card-block">
+                {% if form.errors %}
+                    <div class="alert alert-danger">{{ form.errors }}</div>
+                {% endif %}
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input type="hidden" name="user" value="{{ request.user.id }}">
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.reference.label }}</div>
+                        <div class="col col-md-3">{{ form.reference }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.year.label }}</div>
+                        <div class="col col-md-2">{{ form.year }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.convocatory.label }}</div>
+                        <div class="col col-md-3">{{ form.convocatory }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.area.label }}</div>
+                        <div class="col col-md-9">{{ form.area }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.subarea.label }}</div>
+                        <div class="col col-md-9">{{ form.subarea }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.title.label }}</div>
+                        <div class="col col-md-9">{{ form.title }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.cif.label }}</div>
+                        <div class="col col-md-3">{{ form.cif }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.ccaa.label }}</div>
+                        <div class="col col-md-3">{{ form.ccaa }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.city.label }}</div>
+                        <div class="col col-md-3">{{ form.city }}</div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">{{ form.money.label }}</div>
+                        <div class="col col-md-2">{{ form.money }}</div>
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <button type="submit" class="btn btn-info">Crear</button>
+                        <a href={% url 'profile' %} class="badge badge-light">Volver</a>
+                    </div>
+                </form>
+            </div>
+      </form>
+  
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'api/navbar.html' %} {% block content %}
+
+<div class="container mt-3">
+  <h3>Mi Perfil</h3>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12 search d-flex justify-content-between">
+        <a href={% url 'createproject' %} class="btn btn-sm btn-dark">Crear Proyecto</a>
+        <!-- <form method="get">
+          <div id="custom-search-input">
+            <div class="input-group">
+              <input type="text" class="form-control col-md-9" placeholder="Buscar..." name="idProject"/>
+              <span class="input-group-list">
+                <i class="icon icon-search col-md-3">
+                  <button type="submit" class="btn btn-success">Buscar</button>
+                </i>
+              </span>
+            </div>
+          </div>
+        </form> -->
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Año</th>
+          <th scope="col">Referencia</th>
+          <th scope="col">Título</th>
+          <th scope="col">€ Conced.</th>
+          <th> </th>
+          <th> </th>
+        </tr>
+      </thead>
+      {% for project in project_list %}
+      <tbody>
+        <tr>
+            <th scope="row">{{ project.year }}</th>
+            <td><a href={% url 'project' project.reference %}>{{ project.reference }}</a></td>
+            <td>{{ project.title }}</td>
+            <td>{{ project.money }}</td>
+            <td><a href={% url 'updateproject' project.reference %} class="btn btn-sm btn-block btn-info">Editar</a></td>
+            <td><a href={% url 'deleteproject' project.reference %} class="btn btn-sm btn-block btn-danger">Eliminar</a></td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% endblock %}

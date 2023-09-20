@@ -1,0 +1,29 @@
+{% extends 'api/navbar.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="container">
+  <form class="mt-3" method="post">
+    {% csrf_token %}
+
+    <div class="card mx-auto" style="width: 30rem;">
+      <div class="card-body">
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-danger">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+        <h5 class="card-title text-center">Registar Usuario</h5>
+        {{ form | crispy }}
+        <a href={% url 'login' %} class="card-link">Iniciar Sesión</a>
+        <button type="submit" class="btn btn-sm btn-primary float-right">Registrarse</button>
+      </div>
+    </div>
+    
+  </form>
+  
+</div>
+
+{% endblock %}

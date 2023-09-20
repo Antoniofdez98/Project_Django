@@ -1,0 +1,33 @@
+{% extends 'api/navbar.html' %}
+
+{% block content %}
+
+{% block body %}
+
+<form method="post">
+    {% csrf_token %}
+    {% if request.user.id == object.user.id %}
+        <div class="container mt-4">
+            <div class="card-footer card-block d-flex justify-content-center">
+                <div class="alert alert-warning"><strong>¿Desea eliminar el registro {{ object.reference }}?</strong></div>
+            </div>
+            <div class="card-header d-flex justify-content-between">
+                <button type="submit" class="btn btn-info">Confirmar</button>
+                <a href={% url 'profile' %} class="badge badge-light">Volver</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="container mt-4">
+            <div class="card-footer card-block d-flex justify-content-center">
+                <div class="alert alert-danger"><strong>No tienes permiso para editar este proyecto</strong></div>
+            </div>
+            <div class="card-header d-flex justify-content-between">
+                <a href={% url 'profile' %} class="badge badge-light">Volver</a>
+            </div>
+        </div>
+    {% endif %}
+</form>
+
+{% endblock body %}
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'api/navbar.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="container">
+  <form class="mt-3" method="post">
+    {% csrf_token %}
+
+    <div class="card mx-auto" style="width: 30rem;">
+      <div class="card-body">
+        <h5 class="card-title">Inicio Sesión</h5>
+        {{ form | crispy }}
+        <a href={% url 'register' %} class="card-link">Registrarse</a>
+        <button type="submit" class="btn btn-sm btn-primary float-right">Submit</button>
+      </div>
+    </div>
+    
+  </form>
+  
+</div>
+
+{% endblock %}
